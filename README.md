@@ -4,6 +4,14 @@ A modern, professional documentation template with dark mode, search, and respon
 
 **Powered by [DZBuild](https://dzbuild.com)**
 
+## Preview
+
+### Light Mode
+![Light Mode](public/capture_d'ecran_2026-01-15_144539.png)
+
+### Dark Mode
+![Dark Mode](public/capture_d'ecran_2026-01-15_144602.png)
+
 ## Features
 
 - Clean, modern design with dark/light mode
@@ -18,8 +26,8 @@ A modern, professional documentation template with dark mode, search, and respon
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/youcefzemmar/docs-template.git
-cd docs-template
+git clone https://github.com/youcefzemmar/Documentation-Site.git
+cd Documentation-Site
 ```
 
 ### 2. Install Dependencies
@@ -182,7 +190,7 @@ This creates a `dist/` folder with your static site.
 
    export default defineConfig({
      site: 'https://yourusername.github.io',
-     base: '/your-repo-name',
+     base: '/Documentation-Site',
    });
    ```
 
@@ -203,7 +211,7 @@ Upload the contents of the `dist/` folder to any static web server (Nginx, Apach
 
 ## Support
 
-- GitHub: [github.com/youcefzemmar](https://github.com/youcefzemmar)
+- GitHub: [github.com/youcefzemmar/Documentation-Site](https://github.com/youcefzemmar/Documentation-Site)
 - Website: [dzbuild.com](https://dzbuild.com)
 
 ## License
