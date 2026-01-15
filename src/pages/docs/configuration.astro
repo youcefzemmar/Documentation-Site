@@ -1,0 +1,141 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'config-file', text: 'Configuration File' },
+  { depth: 2, slug: 'integrations', text: 'Integrations' },
+  { depth: 2, slug: 'build-options', text: 'Build Options' },
+  { depth: 2, slug: 'dev-server', text: 'Dev Server' },
+  { depth: 2, slug: 'environment-variables', text: 'Environment Variables' },
+];
+---
+
+<DocsLayout
+  title="Configuration"
+  description="Configure your project settings, integrations, and build options."
+  headings={headings}
+>
+  <h2 id="config-file">Configuration File</h2>
+  <p>The main configuration file is <code>astro.config.mjs</code> in your project root:</p>
+  <pre><code>// astro.config.mjs
+import &#123; defineConfig &#125; from 'astro/config';
+
+export default defineConfig(&#123;
+  site: 'https://example.com',
+  base: '/docs',
+  output: 'static',
+&#125;);</code></pre>
+
+  <h2 id="integrations">Integrations</h2>
+  <p>Add functionality through integrations:</p>
+  <pre><code>import &#123; defineConfig &#125; from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+
+export default defineConfig(&#123;
+  integrations: [
+    react(),
+    tailwind()
+  ]
+&#125;);</code></pre>
+
+  <p>Popular integrations:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Integration</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>@astrojs/react</code></td>
+        <td>React component support</td>
+      </tr>
+      <tr>
+        <td><code>@astrojs/vue</code></td>
+        <td>Vue component support</td>
+      </tr>
+      <tr>
+        <td><code>@astrojs/tailwind</code></td>
+        <td>Tailwind CSS integration</td>
+      </tr>
+      <tr>
+        <td><code>@astrojs/sitemap</code></td>
+        <td>Automatic sitemap generation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="build-options">Build Options</h2>
+  <p>Customize the build process:</p>
+  <pre><code>export default defineConfig(&#123;
+  build: &#123;
+    format: 'directory',
+    assets: '_assets',
+    inlineStylesheets: 'auto'
+  &#125;,
+  compressHTML: true,
+  vite: &#123;
+    build: &#123;
+      minify: 'terser'
+    &#125;
+  &#125;
+&#125;);</code></pre>
+
+  <h2 id="dev-server">Dev Server</h2>
+  <p>Configure the development server:</p>
+  <pre><code>export default defineConfig(&#123;
+  server: &#123;
+    port: 3000,
+    host: true,
+    open: true
+  &#125;
+&#125;);</code></pre>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th>Default</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>port</code></td>
+        <td>4321</td>
+        <td>Port to run dev server</td>
+      </tr>
+      <tr>
+        <td><code>host</code></td>
+        <td>false</td>
+        <td>Expose to network</td>
+      </tr>
+      <tr>
+        <td><code>open</code></td>
+        <td>false</td>
+        <td>Open browser on start</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="environment-variables">Environment Variables</h2>
+  <p>Create a <code>.env</code> file for environment variables:</p>
+  <pre><code># .env
+PUBLIC_API_URL=https://api.example.com
+SECRET_KEY=your-secret-key</code></pre>
+
+  <p>Access in your code:</p>
+  <pre><code>---
+// Public variables (exposed to client)
+const apiUrl = import.meta.env.PUBLIC_API_URL;
+
+// Private variables (server-side only)
+const secretKey = import.meta.env.SECRET_KEY;
+---</code></pre>
+
+  <blockquote>
+    Only variables prefixed with <code>PUBLIC_</code> are exposed to the client bundle.
+  </blockquote>
+</DocsLayout>

@@ -1,0 +1,129 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'authentication-guide', text: 'Authentication Guide' },
+  { depth: 3, slug: 'setup-auth', text: 'Setting Up Authentication' },
+  { depth: 3, slug: 'protected-routes', text: 'Protected Routes' },
+  { depth: 2, slug: 'best-practices', text: 'Best Practices' },
+  { depth: 3, slug: 'security', text: 'Security' },
+  { depth: 3, slug: 'performance', text: 'Performance' },
+  { depth: 2, slug: 'common-patterns', text: 'Common Patterns' },
+];
+---
+
+<DocsLayout
+  title="Guides"
+  description="In-depth guides and tutorials for common use cases and best practices."
+  headings={headings}
+>
+  <h2 id="authentication-guide">Authentication Guide</h2>
+  <p>
+    This guide covers implementing secure authentication in your application. We'll walk through the complete setup process.
+  </p>
+
+  <h3 id="setup-auth">Setting Up Authentication</h3>
+  <p>First, install the authentication package:</p>
+  <pre><code>npm install @auth/core</code></pre>
+
+  <p>Then configure your authentication provider:</p>
+  <pre><code>// auth.config.ts
+export const authConfig = &#123;
+  providers: [
+    &#123;
+      id: 'credentials',
+      name: 'Credentials',
+      credentials: &#123;
+        email: &#123; type: 'email' &#125;,
+        password: &#123; type: 'password' &#125;
+      &#125;
+    &#125;
+  ],
+  session: &#123;
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60 // 30 days
+  &#125;
+&#125;;</code></pre>
+
+  <h3 id="protected-routes">Protected Routes</h3>
+  <p>To protect routes that require authentication:</p>
+  <pre><code>// middleware.ts
+export async function middleware(request) &#123;
+  const session = await getSession(request);
+
+  if (!session) &#123;
+    return redirect('/login');
+  &#125;
+
+  return next();
+&#125;
+
+export const config = &#123;
+  matcher: ['/dashboard/:path*', '/settings/:path*']
+&#125;;</code></pre>
+
+  <h2 id="best-practices">Best Practices</h2>
+
+  <h3 id="security">Security</h3>
+  <p>Follow these security best practices:</p>
+  <ul>
+    <li><strong>Never expose secrets:</strong> Keep API keys and credentials in environment variables</li>
+    <li><strong>Validate input:</strong> Always sanitize and validate user input</li>
+    <li><strong>Use HTTPS:</strong> Encrypt all data in transit</li>
+    <li><strong>Implement rate limiting:</strong> Protect against brute force attacks</li>
+    <li><strong>Regular updates:</strong> Keep dependencies up to date</li>
+  </ul>
+
+  <blockquote>
+    Security is not a feature, it's a requirement. Always prioritize secure coding practices.
+  </blockquote>
+
+  <h3 id="performance">Performance</h3>
+  <p>Optimize your application with these tips:</p>
+  <ul>
+    <li><strong>Lazy loading:</strong> Load components only when needed</li>
+    <li><strong>Image optimization:</strong> Use modern formats like WebP</li>
+    <li><strong>Caching:</strong> Implement appropriate caching strategies</li>
+    <li><strong>Code splitting:</strong> Break large bundles into smaller chunks</li>
+    <li><strong>Database indexing:</strong> Index frequently queried columns</li>
+  </ul>
+
+  <h2 id="common-patterns">Common Patterns</h2>
+  <p>Here are some common patterns used throughout the application:</p>
+
+  <p><strong>Repository Pattern:</strong></p>
+  <pre><code>class UserRepository &#123;
+  async findById(id: string) &#123;
+    return await db.users.findUnique(&#123;
+      where: &#123; id &#125;
+    &#125;);
+  &#125;
+
+  async create(data: CreateUserInput) &#123;
+    return await db.users.create(&#123;
+      data
+    &#125;);
+  &#125;
+
+  async update(id: string, data: UpdateUserInput) &#123;
+    return await db.users.update(&#123;
+      where: &#123; id &#125;,
+      data
+    &#125;);
+  &#125;
+&#125;</code></pre>
+
+  <p><strong>Service Layer Pattern:</strong></p>
+  <pre><code>class UserService &#123;
+  constructor(private repo: UserRepository) &#123;&#125;
+
+  async registerUser(input: RegisterInput) &#123;
+    const hashedPassword = await hash(input.password);
+
+    return this.repo.create(&#123;
+      ...input,
+      password: hashedPassword
+    &#125;);
+  &#125;
+&#125;</code></pre>
+</DocsLayout>

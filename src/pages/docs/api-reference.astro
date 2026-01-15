@@ -1,0 +1,197 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'introduction', text: 'Introduction' },
+  { depth: 2, slug: 'authentication', text: 'Authentication' },
+  { depth: 3, slug: 'api-keys', text: 'API Keys' },
+  { depth: 3, slug: 'bearer-tokens', text: 'Bearer Tokens' },
+  { depth: 2, slug: 'endpoints', text: 'Endpoints' },
+  { depth: 3, slug: 'users', text: 'Users' },
+  { depth: 3, slug: 'resources', text: 'Resources' },
+  { depth: 2, slug: 'error-codes', text: 'Error Codes' },
+  { depth: 2, slug: 'rate-limits', text: 'Rate Limits' },
+];
+---
+
+<DocsLayout
+  title="API Reference"
+  description="Complete API documentation with endpoints, authentication, and examples."
+  headings={headings}
+>
+  <h2 id="introduction">Introduction</h2>
+  <p>
+    Our REST API provides programmatic access to all platform features. The API follows RESTful conventions and returns JSON responses.
+  </p>
+
+  <p>Base URL for all API requests:</p>
+  <pre><code>https://api.example.com/v1</code></pre>
+
+  <h2 id="authentication">Authentication</h2>
+  <p>All API requests require authentication. We support two authentication methods:</p>
+
+  <h3 id="api-keys">API Keys</h3>
+  <p>Include your API key in the request header:</p>
+  <pre><code>curl -H "X-API-Key: your_api_key" \
+  https://api.example.com/v1/users</code></pre>
+
+  <h3 id="bearer-tokens">Bearer Tokens</h3>
+  <p>For user-specific requests, use Bearer token authentication:</p>
+  <pre><code>curl -H "Authorization: Bearer your_token" \
+  https://api.example.com/v1/me</code></pre>
+
+  <h2 id="endpoints">Endpoints</h2>
+
+  <h3 id="users">Users</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>GET</code></td>
+        <td>/users</td>
+        <td>List all users</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td>/users/:id</td>
+        <td>Get user by ID</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td>/users</td>
+        <td>Create new user</td>
+      </tr>
+      <tr>
+        <td><code>PUT</code></td>
+        <td>/users/:id</td>
+        <td>Update user</td>
+      </tr>
+      <tr>
+        <td><code>DELETE</code></td>
+        <td>/users/:id</td>
+        <td>Delete user</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Example Request:</strong></p>
+  <pre><code>GET /v1/users?page=1&limit=10
+
+Response:
+&#123;
+  "data": [
+    &#123;
+      "id": "usr_123",
+      "email": "user@example.com",
+      "name": "John Doe",
+      "created_at": "2024-01-15T10:30:00Z"
+    &#125;
+  ],
+  "meta": &#123;
+    "total": 100,
+    "page": 1,
+    "limit": 10
+  &#125;
+&#125;</code></pre>
+
+  <h3 id="resources">Resources</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>GET</code></td>
+        <td>/resources</td>
+        <td>List resources</td>
+      </tr>
+      <tr>
+        <td><code>POST</code></td>
+        <td>/resources</td>
+        <td>Create resource</td>
+      </tr>
+      <tr>
+        <td><code>GET</code></td>
+        <td>/resources/:id</td>
+        <td>Get resource</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="error-codes">Error Codes</h2>
+  <p>The API uses standard HTTP status codes:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Status</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>200</td>
+        <td>OK</td>
+        <td>Request successful</td>
+      </tr>
+      <tr>
+        <td>201</td>
+        <td>Created</td>
+        <td>Resource created</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>Bad Request</td>
+        <td>Invalid request data</td>
+      </tr>
+      <tr>
+        <td>401</td>
+        <td>Unauthorized</td>
+        <td>Missing or invalid authentication</td>
+      </tr>
+      <tr>
+        <td>403</td>
+        <td>Forbidden</td>
+        <td>Insufficient permissions</td>
+      </tr>
+      <tr>
+        <td>404</td>
+        <td>Not Found</td>
+        <td>Resource not found</td>
+      </tr>
+      <tr>
+        <td>429</td>
+        <td>Too Many Requests</td>
+        <td>Rate limit exceeded</td>
+      </tr>
+      <tr>
+        <td>500</td>
+        <td>Server Error</td>
+        <td>Internal server error</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="rate-limits">Rate Limits</h2>
+  <p>API requests are rate limited to ensure fair usage:</p>
+  <ul>
+    <li><strong>Free tier:</strong> 100 requests per minute</li>
+    <li><strong>Pro tier:</strong> 1,000 requests per minute</li>
+    <li><strong>Enterprise:</strong> Custom limits</li>
+  </ul>
+
+  <p>Rate limit headers are included in all responses:</p>
+  <pre><code>X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 95
+X-RateLimit-Reset: 1609459200</code></pre>
+</DocsLayout>

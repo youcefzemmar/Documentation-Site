@@ -1,0 +1,98 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'system-requirements', text: 'System Requirements' },
+  { depth: 2, slug: 'quick-install', text: 'Quick Install' },
+  { depth: 2, slug: 'manual-installation', text: 'Manual Installation' },
+  { depth: 3, slug: 'clone-repository', text: 'Clone Repository' },
+  { depth: 3, slug: 'install-dependencies', text: 'Install Dependencies' },
+  { depth: 3, slug: 'configure-environment', text: 'Configure Environment' },
+  { depth: 2, slug: 'verify-installation', text: 'Verify Installation' },
+  { depth: 2, slug: 'troubleshooting', text: 'Troubleshooting' },
+];
+---
+
+<DocsLayout
+  title="Installation"
+  description="Step-by-step guide to installing and configuring your development environment."
+  headings={headings}
+>
+  <h2 id="system-requirements">System Requirements</h2>
+  <p>Before installing, ensure your system meets these minimum requirements:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>Minimum</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Node.js</td>
+        <td>18.0</td>
+        <td>20.x LTS</td>
+      </tr>
+      <tr>
+        <td>RAM</td>
+        <td>4 GB</td>
+        <td>8 GB+</td>
+      </tr>
+      <tr>
+        <td>Storage</td>
+        <td>500 MB</td>
+        <td>1 GB+</td>
+      </tr>
+      <tr>
+        <td>OS</td>
+        <td colspan="2">Windows 10+, macOS 10.15+, Linux</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="quick-install">Quick Install</h2>
+  <p>For most users, the quick install is the easiest way to get started:</p>
+  <pre><code>npx create-app@latest my-project</code></pre>
+  <p>This command will:</p>
+  <ul>
+    <li>Create a new project directory</li>
+    <li>Install all necessary dependencies</li>
+    <li>Set up default configuration</li>
+    <li>Initialize a Git repository</li>
+  </ul>
+
+  <h2 id="manual-installation">Manual Installation</h2>
+  <p>For more control over your setup, follow these manual installation steps:</p>
+
+  <h3 id="clone-repository">Clone Repository</h3>
+  <pre><code>git clone https://github.com/your-org/project.git
+cd project</code></pre>
+
+  <h3 id="install-dependencies">Install Dependencies</h3>
+  <pre><code>npm install</code></pre>
+
+  <h3 id="configure-environment">Configure Environment</h3>
+  <p>Copy the example environment file and configure your settings:</p>
+  <pre><code>cp .env.example .env</code></pre>
+  <p>Then edit the <code>.env</code> file with your specific configuration values.</p>
+
+  <h2 id="verify-installation">Verify Installation</h2>
+  <p>After installation, verify everything is working correctly:</p>
+  <pre><code>npm run dev</code></pre>
+  <p>You should see output indicating the development server is running. Open your browser to <code>http://localhost:4321</code> to view your project.</p>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
+  <p>If you encounter issues during installation:</p>
+  <ul>
+    <li><strong>Permission errors:</strong> Try running with <code>sudo</code> or fix npm permissions</li>
+    <li><strong>Node version mismatch:</strong> Use <code>nvm</code> to switch Node versions</li>
+    <li><strong>Missing dependencies:</strong> Delete <code>node_modules</code> and run <code>npm install</code> again</li>
+    <li><strong>Port conflicts:</strong> Check if another process is using port 4321</li>
+  </ul>
+
+  <blockquote>
+    Still having issues? Check our <a href="/docs/guides">community guides</a> or open an issue on GitHub.
+  </blockquote>
+</DocsLayout>

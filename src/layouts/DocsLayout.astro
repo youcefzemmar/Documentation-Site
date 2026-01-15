@@ -1,0 +1,125 @@
+---
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { title, description, headings = [] } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description || "Documentation"} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} - Documentation</title>
+  </head>
+  <body>
+    <Header title="Docs" />
+    <Sidebar currentPath={currentPath} />
+
+    <main class="main-content">
+      <article class="article">
+        <header class="article-header">
+          <h1>{title}</h1>
+          {description && <p class="article-description">{description}</p>}
+        </header>
+        <div class="article-body">
+          <slot />
+        </div>
+      </article>
+    </main>
+
+    <TableOfContents headings={headings} />
+  </body>
+</html>
+
+<style>
+  .main-content {
+    margin-left: var(--sidebar-width);
+    margin-right: var(--toc-width);
+    padding-top: var(--header-height);
+    min-height: 100vh;
+  }
+
+  .article {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  .article-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .article-header h1 {
+    margin-bottom: 0.75rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .article-description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .article-body {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .article-body :global(h2) {
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .article-body :global(h3) {
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .article-body :global(h2 a),
+  .article-body :global(h3 a) {
+    color: inherit;
+  }
+
+  .article-body :global(h2 a:hover),
+  .article-body :global(h3 a:hover) {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 1280px) {
+    .main-content {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .main-content {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article {
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .article-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

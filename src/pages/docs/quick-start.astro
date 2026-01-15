@@ -1,0 +1,90 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'create-project', text: 'Create Your Project' },
+  { depth: 2, slug: 'start-development', text: 'Start Development' },
+  { depth: 2, slug: 'build-first-page', text: 'Build Your First Page' },
+  { depth: 2, slug: 'add-components', text: 'Add Components' },
+  { depth: 2, slug: 'deploy', text: 'Deploy' },
+];
+---
+
+<DocsLayout
+  title="Quick Start"
+  description="Get up and running in under 5 minutes with this quick start guide."
+  headings={headings}
+>
+  <h2 id="create-project">Create Your Project</h2>
+  <p>Run the following command to create a new project:</p>
+  <pre><code>npm create my-app@latest</code></pre>
+
+  <p>You'll be prompted to choose:</p>
+  <ul>
+    <li>Project name</li>
+    <li>Template (starter, blog, docs)</li>
+    <li>TypeScript support (recommended)</li>
+  </ul>
+
+  <h2 id="start-development">Start Development</h2>
+  <p>Navigate to your project and start the development server:</p>
+  <pre><code>cd my-app
+npm run dev</code></pre>
+
+  <p>Your site is now running at <code>http://localhost:4321</code></p>
+
+  <blockquote>
+    The development server includes hot module replacement, so changes appear instantly.
+  </blockquote>
+
+  <h2 id="build-first-page">Build Your First Page</h2>
+  <p>Create a new page by adding a file to the <code>src/pages</code> directory:</p>
+  <pre><code>// src/pages/about.astro
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+&lt;Layout title="About"&gt;
+  &lt;h1&gt;About Us&lt;/h1&gt;
+  &lt;p&gt;Welcome to our site!&lt;/p&gt;
+&lt;/Layout&gt;</code></pre>
+
+  <p>This page is now accessible at <code>/about</code>.</p>
+
+  <h2 id="add-components">Add Components</h2>
+  <p>Create reusable components in the <code>src/components</code> directory:</p>
+  <pre><code>// src/components/Card.astro
+---
+interface Props &#123;
+  title: string;
+  description: string;
+&#125;
+
+const &#123; title, description &#125; = Astro.props;
+---
+
+&lt;div class="card"&gt;
+  &lt;h3&gt;&#123;title&#125;&lt;/h3&gt;
+  &lt;p&gt;&#123;description&#125;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  .card &#123;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+  &#125;
+&lt;/style&gt;</code></pre>
+
+  <h2 id="deploy">Deploy</h2>
+  <p>Build your site for production:</p>
+  <pre><code>npm run build</code></pre>
+
+  <p>Deploy the <code>dist</code> folder to any static hosting provider:</p>
+  <ul>
+    <li>Vercel</li>
+    <li>Netlify</li>
+    <li>Cloudflare Pages</li>
+    <li>GitHub Pages</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,66 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'overview', text: 'Overview' },
+  { depth: 2, slug: 'prerequisites', text: 'Prerequisites' },
+  { depth: 2, slug: 'installation', text: 'Installation' },
+  { depth: 3, slug: 'using-npm', text: 'Using npm' },
+  { depth: 3, slug: 'using-yarn', text: 'Using yarn' },
+  { depth: 2, slug: 'next-steps', text: 'Next Steps' },
+];
+---
+
+<DocsLayout
+  title="Getting Started"
+  description="Learn how to get up and running with our documentation platform in just a few minutes."
+  headings={headings}
+>
+  <h2 id="overview">Overview</h2>
+  <p>
+    Welcome to the documentation platform. This guide will help you understand how to get started quickly and efficiently. Whether you're building a new project or integrating with an existing one, we've got you covered.
+  </p>
+
+  <blockquote>
+    This documentation is designed to be comprehensive yet easy to follow. If you have any questions, don't hesitate to check out our community forums.
+  </blockquote>
+
+  <h2 id="prerequisites">Prerequisites</h2>
+  <p>Before you begin, make sure you have the following installed on your system:</p>
+  <ul>
+    <li><strong>Node.js</strong> - Version 18.0 or higher</li>
+    <li><strong>npm</strong> or <strong>yarn</strong> - Package manager of your choice</li>
+    <li><strong>Git</strong> - For version control</li>
+  </ul>
+
+  <p>You can verify your Node.js installation by running:</p>
+  <pre><code>node --version</code></pre>
+
+  <h2 id="installation">Installation</h2>
+  <p>
+    There are multiple ways to install and set up your project. Choose the method that works best for your workflow.
+  </p>
+
+  <h3 id="using-npm">Using npm</h3>
+  <p>The fastest way to get started is using npm:</p>
+  <pre><code>npm create my-project
+cd my-project
+npm install
+npm run dev</code></pre>
+
+  <h3 id="using-yarn">Using yarn</h3>
+  <p>If you prefer yarn, you can use:</p>
+  <pre><code>yarn create my-project
+cd my-project
+yarn install
+yarn dev</code></pre>
+
+  <h2 id="next-steps">Next Steps</h2>
+  <p>Now that you have your project set up, here are some recommended next steps:</p>
+  <ol>
+    <li>Explore the <a href="/docs/project-structure">project structure</a> to understand how files are organized</li>
+    <li>Learn about <a href="/docs/configuration">configuration options</a> to customize your setup</li>
+    <li>Check out the <a href="/docs/components">components guide</a> to start building</li>
+    <li>Review the <a href="/docs/api-reference">API reference</a> for detailed documentation</li>
+  </ol>
+</DocsLayout>

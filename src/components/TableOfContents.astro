@@ -1,0 +1,124 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings?: Heading[];
+}
+
+const { headings = [] } = Astro.props;
+const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <aside class="toc">
+    <div class="toc-container">
+      <h4 class="toc-title">On this page</h4>
+      <nav class="toc-nav">
+        <ul class="toc-list">
+          {filteredHeadings.map((heading) => (
+            <li class:list={["toc-item", `depth-${heading.depth}`]}>
+              <a href={`#${heading.slug}`} class="toc-link">
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </aside>
+)}
+
+<style>
+  .toc {
+    position: fixed;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
+    width: var(--toc-width);
+    padding: 2rem 1rem;
+    overflow-y: auto;
+  }
+
+  .toc-container {
+    padding-left: 1rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .toc-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-item.depth-3 {
+    padding-left: 0.75rem;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.375rem 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    transition: color 0.15s ease;
+  }
+
+  .toc-link:hover {
+    color: var(--color-text);
+  }
+
+  .toc-link.active {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 1280px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const headings = document.querySelectorAll('h2[id], h3[id]');
+
+  function updateActiveLink() {
+    let activeId = '';
+
+    headings.forEach((heading) => {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 100) {
+        activeId = heading.id;
+      }
+    });
+
+    tocLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href === `#${activeId}`) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveLink, { passive: true });
+  updateActiveLink();
+</script>

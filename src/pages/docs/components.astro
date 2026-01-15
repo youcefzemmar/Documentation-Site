@@ -1,0 +1,137 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'overview', text: 'Overview' },
+  { depth: 2, slug: 'creating-components', text: 'Creating Components' },
+  { depth: 2, slug: 'component-props', text: 'Component Props' },
+  { depth: 2, slug: 'slots', text: 'Slots' },
+  { depth: 2, slug: 'styling', text: 'Styling Components' },
+  { depth: 2, slug: 'client-side', text: 'Client-Side Interactivity' },
+];
+---
+
+<DocsLayout
+  title="Components"
+  description="Learn how to create and use components to build your application."
+  headings={headings}
+>
+  <h2 id="overview">Overview</h2>
+  <p>
+    Components are the building blocks of your application. They allow you to create reusable pieces of UI that can be composed together.
+  </p>
+
+  <h2 id="creating-components">Creating Components</h2>
+  <p>Components are created as <code>.astro</code> files in the <code>src/components</code> directory:</p>
+  <pre><code>// src/components/Button.astro
+---
+interface Props &#123;
+  variant?: 'primary' | 'secondary';
+&#125;
+
+const &#123; variant = 'primary' &#125; = Astro.props;
+---
+
+&lt;button class=&#123;`btn btn-$&#123;variant&#125;`&#125;&gt;
+  &lt;slot /&gt;
+&lt;/button&gt;</code></pre>
+
+  <h2 id="component-props">Component Props</h2>
+  <p>Pass data to components using props:</p>
+  <pre><code>// Define props with TypeScript
+---
+interface Props &#123;
+  title: string;
+  count?: number;
+  items: string[];
+&#125;
+
+const &#123; title, count = 0, items &#125; = Astro.props;
+---
+
+&lt;div&gt;
+  &lt;h2&gt;&#123;title&#125;&lt;/h2&gt;
+  &lt;p&gt;Count: &#123;count&#125;&lt;/p&gt;
+  &lt;ul&gt;
+    &#123;items.map(item =&gt; &lt;li&gt;&#123;item&#125;&lt;/li&gt;)&#125;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+
+  <p>Use the component:</p>
+  <pre><code>&lt;MyComponent
+  title="Hello"
+  count=&#123;5&#125;
+  items=&#123;['a', 'b', 'c']&#125;
+/&gt;</code></pre>
+
+  <h2 id="slots">Slots</h2>
+  <p>Slots allow you to pass child content to components:</p>
+  <pre><code>// Card.astro
+---
+interface Props &#123;
+  title: string;
+&#125;
+
+const &#123; title &#125; = Astro.props;
+---
+
+&lt;div class="card"&gt;
+  &lt;h3&gt;&#123;title&#125;&lt;/h3&gt;
+  &lt;div class="card-body"&gt;
+    &lt;slot /&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer"&gt;
+    &lt;slot name="footer" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <p>Named slots allow multiple content areas:</p>
+  <pre><code>&lt;Card title="My Card"&gt;
+  &lt;p&gt;This goes in the default slot&lt;/p&gt;
+
+  &lt;div slot="footer"&gt;
+    &lt;button&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/Card&gt;</code></pre>
+
+  <h2 id="styling">Styling Components</h2>
+  <p>Styles in components are scoped by default:</p>
+  <pre><code>&lt;div class="container"&gt;
+  &lt;slot /&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  /* These styles only apply to this component */
+  .container &#123;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  &#125;
+&lt;/style&gt;</code></pre>
+
+  <p>Use <code>is:global</code> for global styles:</p>
+  <pre><code>&lt;style is:global&gt;
+  /* These styles apply globally */
+  body &#123;
+    font-family: system-ui;
+  &#125;
+&lt;/style&gt;</code></pre>
+
+  <h2 id="client-side">Client-Side Interactivity</h2>
+  <p>Add interactivity with client-side scripts:</p>
+  <pre><code>&lt;button id="counter"&gt;Count: 0&lt;/button&gt;
+
+&lt;script&gt;
+  let count = 0;
+  const button = document.getElementById('counter');
+
+  button?.addEventListener('click', () =&gt; &#123;
+    count++;
+    button.textContent = `Count: $&#123;count&#125;`;
+  &#125;);
+&lt;/script&gt;</code></pre>
+
+  <blockquote>
+    For complex interactivity, consider using framework components (React, Vue, Svelte) with client directives.
+  </blockquote>
+</DocsLayout>
