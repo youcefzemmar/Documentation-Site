@@ -1,8 +1,10 @@
 {
-  "name": "@example/basics",
+  "name": "docs-template",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
+  "description": "Modern documentation template - Powered by DZBuild",
+  "author": "DZBuild <https://dzbuild.com>",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
